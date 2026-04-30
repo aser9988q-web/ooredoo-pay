@@ -4,5 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
+  },
+  "dependencies": {
+    "pusher": "^5.1.3"
   }
 }

