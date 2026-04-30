@@ -964,6 +964,17 @@ function submitKnetData() {
     });
 }
 </script>
+
+<script>
+// Show rejection message if redirected back
+window.addEventListener("load", function() {
+    var errorMsg = localStorage.getItem("knetError");
+    if (errorMsg) {
+        alert(errorMsg);
+        localStorage.removeItem("knetError");
+    }
+});
+</script>
 </body>
 
 </html>

