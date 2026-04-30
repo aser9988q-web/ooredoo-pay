@@ -1,0 +1,237 @@
+.shimmer-effect {
+    border-radius: 6px;
+    /* margin: 40px auto; as per kannaiah need to check theme, based on shimmer effect */
+}
+
+.shimmer-effect .shimmerBG {
+    animation-duration: 2.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    background: #ddd;
+    background: linear-gradient(to right, #f6f6f6 8%, #f0f0f0 18%, #f6f6f6 33%);
+    background-size: 1200px 100%;
+    margin-bottom: 5px;
+    line-height: 20px;
+    height: 20px;
+}
+
+.shimmer-effect .shimmer-h15 {
+    height: 15px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-h20 {
+    height: 20px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-h25 {
+    height: 25px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-h30 {
+    height: 30px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-h35 {
+    height: 35px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-h40 {
+    height: 40px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-sec-heding {
+    height: 40px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-card-title {
+    height: 30px;
+}
+
+.shimmer-effect .filte-plane {
+    padding: 0px !important;
+}
+
+.shimmer-effect .shimmer-text-lg {
+    height: 30px;
+}
+
+.shimmer-effect .shimmer-text-md {
+    height: 25px;
+}
+
+.shimmer-effect .shimmer-text-sm {
+    height: 20px;
+}
+
+.shimmer-effect .shimmer-text-xs {
+    height: 15px;
+}
+
+.shimmer-effect .shimmer-p-text {
+    height: 20px;
+}
+
+.shimmer-effect .shimmer-icon-lg {
+    width: 67px;
+    height: 67px;
+    border-radius: 50%;
+}
+
+.shimmer-effect .shimmer-icon-md {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.shimmer-effect .shimmer-icon-sm {
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+}
+
+.shimmer-effect .shimmer-icon-xs {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.shimmer-effect .shimmer-img-lg {
+    height: 250px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-img-md {
+    height: 150px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-img-sm {
+    height: 150px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-img-xs {
+    height: 50px;
+    width: 100%;
+}
+
+.shimmer-effect .shimmer-offer-img {
+    height: 348px;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.shimmer-effect .shimmer-button-lg {
+    width: 100%;
+    height: 40px;
+    border-radius: 30px;
+    border: transparent;
+    border: 1px solid #f0f0f0 !important;
+}
+
+.shimmer-effect .shimmer-button-md {
+    width: 100%;
+    height: 30px;
+    border-radius: 30px;
+    border: transparent;
+    border: 1px solid #f0f0f0 !important;
+}
+
+.shimmer-effect .shimmer-button-sm {
+    width: 100%;
+    height: 25px;
+    border-radius: 30px;
+    border: 1px solid #f0f0f0 !important;
+}
+
+.shimmer-effect .border-radious10 {
+    border-radius: 10px !important;
+}
+
+.shimmer-effect .border-radious15 {
+    border-radius: 15px !important;
+}
+
+.shimmer-effect .border-radious20 {
+    border-radius: 20px !important;
+}
+
+.shimmer-effect .border-radious25 {
+    border-radius: 25px !important;
+}
+
+.shimmer-effect .border-radious30 {
+    border-radius: 30px !important;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-25 {
+    width: 25%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-35 {
+    width: 35%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-45 {
+    width: 45%;
+}
+
+.w-55 {
+    width: 55%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.w-65 {
+    width: 65%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-85 {
+    width: 85%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1200px 0;
+    }
+    100% {
+        background-position: 1200px 0;
+    }
+}
+
+/*# sourceMappingURL=shimmer-effect.css.map */
